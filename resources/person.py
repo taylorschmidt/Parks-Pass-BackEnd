@@ -56,5 +56,14 @@ def logout():
     logout_user()
     return jsonify(data={}, status={"code": 200, "message": "Successful logout!"})
 
+@person.route('/update', methods=["PUT"])
+def update_username():
+    payload = request.get_json()
+    try: 
+        query = models.Person.update({models.Person.username: payload['username']}).where(models.Person.email == payload['email']).execute()
+        return jsonify(status={"code": 200, "message":"Successfully updated."})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={"code": 401, "message":"Unable to update user."})
+
 
 
