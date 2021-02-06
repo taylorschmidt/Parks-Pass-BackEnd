@@ -12,12 +12,15 @@ def create_person_park():
     #payload should have person_id and visited_park_id
     try:
         if current_user.id:
-            person_park = models.PersonPark.create(**payload)
-            pp_dict = model_to_dict(person_park)
+            query = models.PersonPark.get(models.PersonPark.visited_park_id == payload['visited_park_id'], models.PersonPark.person_id == payload['person_id'])
+            return jsonify(data={},\
+                       status={"code": 401,\
+                               "message": "A park relationship with that user already exists."})
+    except models.DoesNotExist:
+        person_park = models.PersonPark.create(**payload)
+        pp_dict = model_to_dict(person_park)
             #create the relationship between dog and user 
         return jsonify(data=pp_dict, status={"code": 201, "message": "Created"})
-    except models.DoesNotExist:
-        return jsonify(data={}, status={"code": 401, "message":"Username or password is incorrect."})
 
 @person_park.route('/visited', methods=["GET"])
 def get_person_park_visits():
