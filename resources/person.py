@@ -1,6 +1,6 @@
 import models
 
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, session
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user
 
@@ -11,7 +11,6 @@ person = Blueprint('person', 'person')
 @person.route('/register', methods=["POST"])
 def register():
     payload = request.get_json()
-    print(payload, "!!!!!!!!!!!!!!!")
     # make the inputted email lowercase
     payload['email'].lower()
 
@@ -27,9 +26,10 @@ def register():
         # like counter = counter + 1 - we are overwriting the original payload password with the hashed password
         payload['password'] = generate_password_hash(payload['password'])
         person = models.Person.create(username=payload['username'], password=payload['password'], email=payload['email'])
-        login_user(person)
         person_dict = model_to_dict(person)
         del person_dict['password'] # don't expose password!
+        login_user(user=person, remember=True)
+        session['logged_in']=True
         return jsonify(data=person_dict, status={"code": 201, "message": "Successfully registered."})
 
 @person.route('/login', methods=["POST"])
@@ -44,7 +44,8 @@ def login():
         person_dict = model_to_dict(person)
         if(check_password_hash(person_dict['password'], payload['password'])):
             del person_dict['password']
-            login_user(person)
+            login_user(user=person, remember=True)
+            session['logged_in']=True
             return jsonify(data=person_dict, status={"code": 200, "message":"Success"})
         else:
             return jsonify(data={}, status={"code": 401, "message":"Username or password is incorrect."})
@@ -65,5 +66,15 @@ def update_username():
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message":"Unable to update user."})
 
-
+@person.route('/', methods=["GET"])
+def get_person():
+    try:
+        person = [model_to_dict(person) for person in \
+                models.Person.select() \
+                .where(models.Person.id == current_user.id)] 
+        print('FROM GET ROUTE. UserId:', current_user.id)
+        return jsonify(data=person, status={"code": 200, "message": "Success"})
+    except models.DoesNotExist:
+        return jsonify(data={}, \
+                    status={"code": 401, "message": "Log in or sign up to view your profile."})
 

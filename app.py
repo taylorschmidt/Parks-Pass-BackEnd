@@ -23,9 +23,6 @@ def load_user(user_id):
     except models.DoesNotExist:
         return None
 
-
-
-
 @app.before_request
 def before_request():
     g.db = models.DATABASE
@@ -42,14 +39,16 @@ def after_request(response):
 def index():
     return 'My first Flask App, bitch!'
 
-CORS(park,\
+CORS(app,\
      origins=['http://localhost:3000'],\
      supports_credentials=True)
 
 app.register_blueprint(park, url_prefix='/api/v1/park')
 app.register_blueprint(person, url_prefix='/api/v1/user')
 app.register_blueprint(person_park, url_prefix='/api/v1/person_park')
-
+CORS(park)
+CORS(person)
+CORS(person_park)
 
 
 
