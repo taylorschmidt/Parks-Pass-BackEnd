@@ -22,7 +22,7 @@ def create_person_park():
             #create the relationship between dog and user 
         return jsonify(data=pp_dict, status={"code": 201, "message": "Created"})
 
-@person_park.route('/visited', methods=["GET"])
+@person_park.route('/visited', methods=["GET", "POST"])
 def get_person_park_visits():
     payload = request.get_json()
     #payload should just have user's email address

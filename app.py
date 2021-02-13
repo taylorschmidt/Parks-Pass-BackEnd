@@ -37,7 +37,7 @@ def after_request(response):
 
 @app.route('/')
 def index():
-    return 'My first Flask App, bitch!'
+    return 'This Flask App works!'
 
 CORS(app,\
      origins=['http://localhost:3000'],\
