@@ -1,7 +1,7 @@
 import models
 from peewee import *
 from flask import Blueprint, jsonify, request
-from flask_login import current_user
+from flask_login import current_user, login_required
 from playhouse.shortcuts import model_to_dict
 
 person_park = Blueprint('person_park', 'person_park')
@@ -36,7 +36,7 @@ def get_person_park_visits():
 #Run below in sql shell to see joins
 #SELECT * FROM person INNER JOIN personpark ON person.id = personpark.person_id INNER JOIN park on personpark.visited_park_id = park.id;
 
-@person_park.route('/visited', methods=['DELETE'])
+@person_park.route('/visited/delete', methods=['GET', 'POST'])
 def delete_person_park_visit():
     payload = request.get_json()
     #payload should have person_id and visited_park_id

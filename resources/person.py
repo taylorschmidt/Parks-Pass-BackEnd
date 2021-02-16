@@ -55,6 +55,7 @@ def login():
 @person.route('/logout', methods=["GET", "POST"])
 def logout():
     logout_user()
+    session['logged_in']=False
     return jsonify(data={}, status={"code": 200, "message": "Successful logout!"})
 
 @person.route('/update', methods=["PUT"])
