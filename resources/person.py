@@ -52,7 +52,7 @@ def login():
             session['logged_in']=True
             return jsonify(data=person_dict, status={"code": 200, "message":"Success"})
         else:
-            return jsonify(data={}, status={"code": 401, "message":"Username or password is incorrect."})
+            return jsonify(data={'stats': 'username or password is incorrect'}, status={"code": 401, "message":"Username or password is incorrect."})
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message":"Username or password is incorrect."})
 
@@ -78,7 +78,6 @@ def get_person():
         person = [model_to_dict(person) for person in \
                 models.Person.select() \
                 .where(models.Person.id == current_user.id)] 
-        print('FROM GET ROUTE. UserId:', current_user.id)
         return jsonify(data=person, status={"code": 200, "message": "Success"})
     except models.DoesNotExist:
         return jsonify(data={}, \
