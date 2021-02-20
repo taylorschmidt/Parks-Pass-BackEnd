@@ -49,7 +49,7 @@ def index():
 
 
 CORS(app,\
-     origins=['http://localhost:3000', "http://parks-passport.herokuapp.com"]\
+     origins=['http://localhost:3000', "http://parks-passport.herokuapp.com"],\
      supports_credentials=True)
 
 app.register_blueprint(park, url_prefix='/api/v1/park')
