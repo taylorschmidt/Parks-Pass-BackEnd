@@ -16,23 +16,6 @@ def get_all_parks():
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
-# @park.route('/', methods=["POST"])
-# def create_park():
-#     ## see request payload anagolous to req.body in express
-#     payload = request.get_json()
-#     try:
-#         park = models.Park.get_or_create(**payload)
-#         ## see the object
-#         print(park.__dict__)
-#         ## Look at all the methods
-#         print(dir(park))
-#         # Change the model to a dict
-#         print(model_to_dict(park), 'model to dict')
-#         park_dict = model_to_dict(park)
-#         return jsonify(data=park_dict, status={"code": 201, "message": "Success"})
-#     except models.DoesNotExist:
-#         return jsonify(data={}, status={"code": 401, "message": "Error creating the park."})
-
 @park.route('/', methods=["GET", "POST"])
 def findOrCreatePark():
     payload = request.get_json()
