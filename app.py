@@ -15,7 +15,6 @@ from resources.person_park import person_park
 app = Flask(__name__)
 
 # create our session secret key
-# app.config.from_pyfile('config.py')
 app.config.from_pyfile('config.py')
 
 login_manager = LoginManager() # in JS -- const loginManager = new LoginManager()
@@ -44,12 +43,8 @@ def after_request(response):
 def index():
     return 'This Flask App works!'
 
-# CORS(dogs_api, origins=["http://localhost:3000", "http://reactaddress.com"], supports_credentials=True)
-
-
-
 CORS(app,\
-     origins=['http://localhost:3000', "http://parks-passport.herokuapp.com"],\
+     origins=['http://localhost:3000', 'https://parks-passport.herokuapp.com'],\
      supports_credentials=True)
 
 app.register_blueprint(park, url_prefix='/api/v1/park')
