@@ -13,7 +13,8 @@ from resources.person_park import person_park
 app = Flask(__name__)
 
 # create our session secret key
-app.config.from_pyfile('config.py')
+# app.config.from_pyfile('config.py')
+app.config.from_pyfile('./config.py')
 
 login_manager = LoginManager() # in JS -- const loginManager = new LoginManager()
 login_manager.init_app(app) # initialize the new LoginManager instance in our app
