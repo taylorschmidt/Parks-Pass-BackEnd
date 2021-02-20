@@ -2,6 +2,8 @@ from flask import Flask, request, jsonify, g
 from flask_cors import CORS
 from flask_login import LoginManager
 
+import os 
+
 import models
 from resources.park import park
 from resources.person import person
@@ -39,6 +41,10 @@ def after_request(response):
 def index():
     return 'This Flask App works!'
 
+# CORS(dogs_api, origins=["http://localhost:3000", "http://reactaddress.com"], supports_credentials=True)
+
+
+
 CORS(app,\
      origins=['http://localhost:3000'],\
      supports_credentials=True)
@@ -50,7 +56,9 @@ CORS(park)
 CORS(person)
 CORS(person_park)
 
-
+if 'ON_HEROKU' in os.environ:
+    print('hitting ')
+    models.initialize()
 
 if __name__ == '__main__':
     models.initialize()

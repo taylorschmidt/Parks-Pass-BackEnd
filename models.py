@@ -1,8 +1,11 @@
 from peewee import *
 import datetime
 from flask_login import UserMixin
+import os 
+from playhouse.db_url import connect
 
-DATABASE = PostgresqlDatabase('parks_pass', host='localhost', port=5432)
+DATABASE = connect(os.environ.get('DATABASE_URL'))
+# DATABASE = PostgresqlDatabase('parks_pass', host='localhost', port=5432)
 
 class BaseModel(Model):
     class Meta:
