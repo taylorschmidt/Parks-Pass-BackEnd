@@ -1,1 +1,1 @@
-web: gunicorn -w 3 --forwarded-allow-ips="*" app:app
+web: gunicorn -w 1 --forwarded-allow-ips=* app:app
