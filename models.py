@@ -29,7 +29,7 @@ class PersonPark (BaseModel):
     # favorite_park = ForeignKeyField(Park, backref='fav-tourist')
 
 def initialize():
-    DATABASE.connect()
+    DATABASE.conn()
     DATABASE.create_tables([Person, Park, PersonPark])
     print("Database tables created.")
     DATABASE.close()
