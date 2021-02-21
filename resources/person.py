@@ -50,6 +50,8 @@ def login():
             session['person_id'] = person.id
             login_user(user=person, remember=True)
             session['logged_in']=True
+            session['username'] = person.username
+            g.user = person.username
             return jsonify(data=person_dict, status={"code": 200, "message":"Success"})
         else:
             return jsonify(data={'stats': 'username or password is incorrect'}, status={"code": 401, "message":"Username or password is incorrect."})

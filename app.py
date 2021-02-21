@@ -35,6 +35,9 @@ def load_user(user_id):
 def before_request():
     g.db = models.DATABASE
     g.db.connect()
+    g.user = None
+    if "username" in session:
+        g.user = get_user(session['username'])
 
 
 @app.after_request
