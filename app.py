@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, g
 from flask_cors import CORS
 from flask_login import LoginManager
 
+
 import os 
 
 import models
@@ -15,8 +16,8 @@ from resources.person_park import person_park
 app = Flask(__name__)
 
 # create our session secret key
-app.secret_key = 'fignewton'
-# app.config.from_pyfile('config.py')
+app.config.from_pyfile('config.py')
+
 
 
 login_manager = LoginManager() # in JS -- const loginManager = new LoginManager()
