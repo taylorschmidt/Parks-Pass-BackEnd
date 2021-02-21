@@ -5,6 +5,7 @@ from flask_cors import CORS
 from flask_login import LoginManager
 
 import redis
+from flask.ext.redis import Redis
 
 import os 
 
@@ -15,6 +16,9 @@ from resources.person_park import person_park
 
 # instantiate the app
 app = Flask(__name__)
+
+redis = Redis()
+redis.init_app(app)
 
 # create our session secret key
 app.config.from_pyfile('config.py')
