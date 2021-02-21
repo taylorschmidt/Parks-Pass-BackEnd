@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify, g
 from flask_cors import CORS
 from flask_login import LoginManager
 
+import redis
 
 import os 
 
@@ -18,7 +19,7 @@ app = Flask(__name__)
 # create our session secret key
 app.config.from_pyfile('config.py')
 
-
+db=redis.from_url(os.environ['REDISCLOUD_URL'])
 
 login_manager = LoginManager() # in JS -- const loginManager = new LoginManager()
 login_manager.init_app(app) # initialize the new LoginManager instance in our app
@@ -43,8 +44,14 @@ def after_request(response):
 
 
 @app.route('/')
-def index():
-    return 'This Flask App works!'
+def hello_world():
+    name=db.get('name') or'World'
+    return 'Hello %s!' % name
+
+@app.route('/setname/<name>')
+def setname(name):
+    db.set('name',name)
+    return 'Name updated.'
 
 CORS(app,\
      origins=['http://localhost:3000', 'https://parks-passport.herokuapp.com'],\
