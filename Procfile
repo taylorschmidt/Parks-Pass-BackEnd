@@ -1,1 +1,1 @@
-web: gunicorn -w 1 --forwarded-allow-ips=* app:app
+web: python3 app.py
