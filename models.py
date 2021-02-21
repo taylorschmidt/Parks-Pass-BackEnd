@@ -5,9 +5,9 @@ import os
 from playhouse.db_url import connect
 import psycopg2
 
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE = os.environ['DATABASE_URL']
 
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+conn = psycopg2.connect(DATABASE, sslmode='require')
 # DATABASE = connect(os.environ.get('DATABASE_URL'))
 # DATABASE = PostgresqlDatabase('parks_pass', host='localhost', port=5432)
 
