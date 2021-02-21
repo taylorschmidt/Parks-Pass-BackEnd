@@ -3,8 +3,12 @@ import datetime
 from flask_login import UserMixin
 import os 
 from playhouse.db_url import connect
+import psycopg2
 
-DATABASE = connect(os.environ.get('DATABASE_URL'))
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+# DATABASE = connect(os.environ.get('DATABASE_URL'))
 # DATABASE = PostgresqlDatabase('parks_pass', host='localhost', port=5432)
 
 class BaseModel(Model):
