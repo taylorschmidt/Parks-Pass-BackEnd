@@ -75,6 +75,7 @@ def update_username():
 @person.route('/', methods=["GET"])
 def get_person():
     try:
+        session['logged_in']=True
         person = [model_to_dict(person) for person in \
                 models.Person.select() \
                 .where(models.Person.id == current_user.id)] 
