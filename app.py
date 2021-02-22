@@ -21,6 +21,8 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 redis = Redis()
 redis.init_app(app)
+sess = Session()
+sess.init_app(app)
 
 
 
