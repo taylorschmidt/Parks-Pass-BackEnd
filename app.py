@@ -18,6 +18,7 @@ from resources.person_park import person_park
 
 # instantiate the app
 app = Flask(__name__)
+app.secret_key = 'fignewton'
 app.config.from_pyfile('config.py')
 redis = Redis()
 redis.init_app(app)
