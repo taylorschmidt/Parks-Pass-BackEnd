@@ -18,11 +18,12 @@ from resources.person_park import person_park
 
 # instantiate the app
 app = Flask(__name__)
-app.config['SESSION_TYPE'] = 'redis'
+
 app.config['SECRET_KEY'] = 'fignewton'
 app.config.from_pyfile('config.py')
 redis = Redis()
 redis.init_app(app)
+app.config['SESSION_TYPE'] = 'redis'
 sess = Session()
 sess.init_app(app)
 
@@ -46,13 +47,13 @@ def load_user(user_id):
 @app.before_request
 def before_request():
     g.db = models.DATABASE
-    g.user = current_user
+    
     g.db.connect()
 
 
 @app.after_request
 def after_request(response):
-    g.db = models.DATABASE
+
     g.db.close()
     return response
 
@@ -75,7 +76,6 @@ CORS(person)
 CORS(person_park)
 
 if 'ON_HEROKU' in os.environ:
-    app.secret_key = 'fignewton'
     print('hitting ')
     models.initialize()
 
