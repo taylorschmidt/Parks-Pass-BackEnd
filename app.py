@@ -24,7 +24,7 @@ redis = Redis()
 redis.init_app(app)
 sess = Session()
 sess.init_app(app)
-
+app.secret_key = 'fignewton'
 
 
 # create our session secret key
@@ -72,9 +72,11 @@ CORS(person)
 CORS(person_park)
 
 if 'ON_HEROKU' in os.environ:
+    app.secret_key = 'fignewton'
     print('hitting ')
     models.initialize()
 
 if __name__ == '__main__':
+    app.secret_key = 'fignewton'
     models.initialize()
     app.run(port=8000, debug=True)
