@@ -1,7 +1,7 @@
 # https://parkspassport-api-heroku.herokuapp.com/
 
 from flask import Flask, request, jsonify, g, session
-from flask_session import session
+from flask_session import Session
 from redis import Redis
 from flask_cors import CORS
 from flask_login import LoginManager
