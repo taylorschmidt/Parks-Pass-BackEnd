@@ -76,7 +76,7 @@ def update_username():
 
 @person.route('/', methods=["GET"])
 def get_person():
-    if session['key'] = 'value'
+    if session['key'] = 'value':
         try:
             person = [model_to_dict(person) for person in \
                     models.Person.select() \
