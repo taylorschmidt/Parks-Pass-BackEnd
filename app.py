@@ -28,7 +28,7 @@ REDISCLOUD = os.environ.get('REDISCLOUD_URL')
 app.config['SESSION_REDIS'] = redis.from_url(REDISCLOUD)
 sess = Session()
 sess.init_app(app)
-session['key'] = 'value'
+
 
 
 # create our session secret key
@@ -61,6 +61,7 @@ def after_request(response):
 
 @app.route('/')
 def hello_world():
+    session['key'] = 'value'
     return 'hello this flask app is working'
 
 
