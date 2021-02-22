@@ -18,7 +18,7 @@ from resources.person_park import person_park
 # instantiate the app
 app = Flask(__name__)
 SESSION_TYPE = 'redis'
-SESSION_REDIS = Redis(host-"https://parkspassport-api-heroku.herokuapp.com/", port=8080)
+SESSION_REDIS = Redis(host="https://parkspassport-api-heroku.herokuapp.com/", port=8080)
 app.config.from_object(__name__)
 Session(app)
 
