@@ -24,7 +24,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fignewton'
 app.config.from_pyfile('config.py')
 app.config['SESSION_TYPE'] = 'redis'
-REDISCLOUD = connect(os.environ.get('REDISCLOUD'))
+REDISCLOUD = os.environ.get('REDISCLOUD')
+print("!!!!!!!!!!!!!!!!!!!!!!!!!", REDISCLOUD)
 app.config['SESSION_REDIS'] = redis.from_url(REDISCLOUD)
 sess = Session()
 sess.init_app(app)
