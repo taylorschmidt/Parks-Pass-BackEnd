@@ -5,6 +5,7 @@ from flask_session import Session
 from redis import Redis
 from flask_cors import CORS
 from flask_login import LoginManager
+from flask_redis import Redis
 
 import os 
 
@@ -17,10 +18,9 @@ from resources.person_park import person_park
 
 # instantiate the app
 app = Flask(__name__)
-SESSION_TYPE = 'redis'
-SESSION_REDIS = Redis(host="https://parkspassport-api-heroku.herokuapp.com/", port=8080)
 app.config.from_object(__name__)
-Session(app)
+redis = Redis()
+redis.init_app(app)
 
 
 
