@@ -16,7 +16,7 @@ from resources.park import park
 from resources.person import person
 from resources.person_park import person_park
 
-from DateTime import timedelta
+from datetime import timedelta
 
 
 
