@@ -8,6 +8,7 @@ from flask_login import LoginManager
 from flask_redis import Redis
 import redis
 
+from playhouse.db_url import connect
 import os 
 
 import models
@@ -23,7 +24,8 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fignewton'
 app.config.from_pyfile('config.py')
 app.config['SESSION_TYPE'] = 'redis'
-app.config['SESSION_REDIS'] = redis.from_url('redis://exampleredis:6379')
+REDISCLOUD = connect(os.environ.get('REDISCLOUD'))
+app.config['SESSION_REDIS'] = redis.from_url(REDISCLOUD)
 sess = Session()
 sess.init_app(app)
 
