@@ -56,7 +56,6 @@ def after_request(response):
 
 @app.route('/')
 def hello_world():
-    session['trial'] = 'working'
     return 'hello this flask app is working'
 
 
