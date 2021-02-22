@@ -47,13 +47,12 @@ def load_user(user_id):
 @app.before_request
 def before_request():
     g.db = models.DATABASE
-    
     g.db.connect()
 
 
 @app.after_request
 def after_request(response):
-
+    g.db = models.DATABASE
     g.db.close()
     return response
 
