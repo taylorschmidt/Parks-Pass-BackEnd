@@ -76,12 +76,13 @@ def update_username():
 
 @person.route('/', methods=["GET"])
 def get_person():
-    try:
-        person = [model_to_dict(person) for person in \
-                models.Person.select() \
-                .where(models.Person.id == current_user.id)] 
-        return jsonify(data=person, status={"code": 200, "message": "Success"})
-    except models.DoesNotExist:
-        return jsonify(data={}, \
-                    status={"code": 401, "message": "Log in or sign up to view your profile."})
+    if session['key'] = 'value'
+        try:
+            person = [model_to_dict(person) for person in \
+                    models.Person.select() \
+                    .where(models.Person.id == current_user.id)] 
+            return jsonify(data=person, status={"code": 200, "message": "Success"})
+        except models.DoesNotExist:
+            return jsonify(data={}, \
+                        status={"code": 401, "message": "Log in or sign up to view your profile."})
 
