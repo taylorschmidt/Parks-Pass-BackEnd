@@ -61,7 +61,6 @@ def after_request(response):
 
 @app.route('/')
 def hello_world():
-    session['key'] = 'value'
     return 'hello this flask app is working'
 
 
