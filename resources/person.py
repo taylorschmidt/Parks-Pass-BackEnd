@@ -43,6 +43,7 @@ def login():
         person = models.Person.get(models.Person.email == payload['email'])
         person_dict = model_to_dict(person)
         if(check_password_hash(person_dict['password'], payload['password'])):
+            session['key'] = 'value'
             del person_dict['password']
             session.pop('person_id', None)
             login_user(user = person, remember=True)
@@ -76,6 +77,7 @@ def update_username():
 
 @person.route('/', methods=["GET"])
 def get_person():
+    session['key'] = 'value'
     try:
         person = [model_to_dict(person) for person in \
                 models.Person.select() \
