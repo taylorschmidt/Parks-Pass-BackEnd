@@ -18,13 +18,14 @@ from resources.person_park import person_park
 
 # instantiate the app
 app = Flask(__name__)
-app.secret_key = 'fignewton'
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SECRET_KEY'] = 'super secret key'
 app.config.from_pyfile('config.py')
 redis = Redis()
 redis.init_app(app)
 sess = Session()
 sess.init_app(app)
-app.secret_key = 'fignewton'
+
 
 
 # create our session secret key
