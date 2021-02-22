@@ -48,6 +48,8 @@ def load_user(user_id):
 
 @app.before_request
 def before_request():
+    session.permanent = True
+    app.permanent_session_lifetime = timedelta(minutes=5)
     g.db = models.DATABASE
     g.db.connect()
 
