@@ -13,12 +13,14 @@ from resources.park import park
 from resources.person import person
 from resources.person_park import person_park
 
-sess = Session()
+
 
 # instantiate the app
 app = Flask(__name__)
-# SESSION_TYPE = 'redis'SESSION_REDIS = Redis(host="parkspassport-api-heroku.herokuapp.com", port=8080)
+SESSION_TYPE = 'redis'
+SESSION_REDIS = Redis(host-"https://parkspassport-api-heroku.herokuapp.com/", port=8080)
 app.config.from_object(__name__)
+Session(app)
 
 
 
@@ -28,7 +30,7 @@ app.config.from_pyfile('config.py')
 
 login_manager = LoginManager() # in JS -- const loginManager = new LoginManager()
 login_manager.init_app(app) # initialize the new LoginManager instance in our app
-sess.init_app(app)
+
 
 @login_manager.user_loader
 def load_user(user_id):
