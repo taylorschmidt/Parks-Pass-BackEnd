@@ -23,7 +23,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'fignewton'
 app.config.from_pyfile('config.py')
 app.config['SESSION_TYPE'] = 'redis'
-app.config['SESSION_REDIS'] = redis.from_url('127.0.0.1:6379')
+app.config['SESSION_REDIS'] = redis.from_url('redis://exampleredis:6379')
 sess = Session()
 sess.init_app(app)
 
