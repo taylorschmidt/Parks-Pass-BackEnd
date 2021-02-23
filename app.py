@@ -69,7 +69,7 @@ def hello_world():
 
 
 CORS(app,\
-     origins=['http://localhost:3000', 'https://parks-passsport-6mwnb5a4i-taylorschmidt.vercel.app', 'https://parkspassport-api-heroku.herokuapp.com/'],\
+     origins=['http://localhost:3000', 'hhttps://parks-passsport-ne2hcadt2-taylorschmidt.vercel.app', 'https://parkspassport-api-heroku.herokuapp.com/'],\
      supports_credentials=True)
 
 app.register_blueprint(park, url_prefix='/api/v1/park')
