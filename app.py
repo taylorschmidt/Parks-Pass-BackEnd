@@ -24,15 +24,17 @@ from datetime import timedelta
 # instantiate the app
 app = Flask(__name__)
 
+
+session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
+sess = Session()
+sess.init_app(app)
 app.config['SECRET_KEY'] = 'fignewton'
 app.config.from_pyfile('config.py')
 app.config['SESSION_TYPE'] = 'redis'
 REDISCLOUD = os.environ.get('REDISCLOUD_URL')
 app.config['SESSION_REDIS'] = redis.from_url(REDISCLOUD)
-app.config.update( SESSION_COOKIE_NAME="my_cookie")
-session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
-sess = Session()
-sess.init_app(app)
+app.config['SESSION_COOKIE_NAME'] = 'my_cookie'
+app.config['SESSION_COOKIE_HTTPONLY'] = False
 session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
 
 
