@@ -75,7 +75,7 @@ def update_username():
         return jsonify(data={}, status={"code": 401, "message":"Unable to update user."})
 
 @person.route('/', methods=["GET"])
-def get_person(request):
+def get_person(self, request):
     name = request.cookies.get('my_cookie')
     print('!!! here is my cookie', name)
     try:
