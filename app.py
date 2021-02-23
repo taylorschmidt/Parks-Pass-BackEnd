@@ -35,7 +35,7 @@ session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
 sess = Session()
 sess.init_app(app)
 session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
-
+print(session_cookie, 'here is the og cookie')
 
 # create our session secret key
 app.config.from_pyfile('config.py')
@@ -54,8 +54,6 @@ def load_user(user_id):
 
 @app.before_request
 def before_request():
-    session.permanent = True
-    app.permanent_session_lifetime = timedelta(minutes=5)
     g.db = models.DATABASE
     g.db.connect()
 
