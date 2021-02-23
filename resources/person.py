@@ -63,7 +63,7 @@ def login():
 def logout():
     session.pop('person_id', None)
     session.pop('logged_in', None)
-    session['logged_in']=False
+    # session['logged_in']=False
     logout_user()
     return jsonify(data={}, status={"code": 200, "message": "Successful logout!"})
 
@@ -78,7 +78,7 @@ def update_username():
 
 @person.route('/', methods=["GET"])
 def get_person():
-    session['logged_in'] = True
+    # session['logged_in'] = True
     try:
         person = [model_to_dict(person) for person in \
                 models.Person.select() \
