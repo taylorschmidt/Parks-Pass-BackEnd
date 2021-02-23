@@ -3,9 +3,10 @@ import models
 from flask import Blueprint, jsonify, request, session, g
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import login_user, logout_user, current_user, login_required
-
+from flask.sessions import SecureCookieSessionInterface
 from playhouse.shortcuts import model_to_dict
 
+session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
 person = Blueprint('person', 'person')
 
 @person.route('/register', methods=["POST"])
