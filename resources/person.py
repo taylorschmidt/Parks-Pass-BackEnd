@@ -75,7 +75,9 @@ def update_username():
         return jsonify(data={}, status={"code": 401, "message":"Unable to update user."})
 
 @person.route('/', methods=["GET"])
-def get_person():
+def get_person(request):
+    name = request.cookies.get('my_cookie')
+    print('!!! here is my cookie', name)
     try:
         person = [model_to_dict(person) for person in \
                 models.Person.select() \
