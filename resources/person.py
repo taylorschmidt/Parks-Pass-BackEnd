@@ -6,7 +6,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from flask.sessions import SecureCookieSessionInterface
 from playhouse.shortcuts import model_to_dict
 
-session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
+
 person = Blueprint('person', 'person')
 
 @person.route('/register', methods=["POST"])
@@ -77,8 +77,7 @@ def update_username():
 
 @person.route('/', methods=["GET"])
 def get_person():
-    same_cookie = session_cookie.dumps(dict(session))
-    response.headers.add("Set-Cookie", f"my_cookie={same_cookie}; Secure; HttpOnly; SameSite=None; Path=/;")
+    response.headers.add("Set-Cookie", f"my_cookie='a cookie'; Secure; HttpOnly; SameSite=None; Path=/;")
     name = request.cookies.get('my_cookie')
     print('!!! here is my cookie', name)
     try:

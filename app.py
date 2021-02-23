@@ -60,8 +60,8 @@ def before_request():
 
 @app.after_request
 def after_request(response):
-    same_cookie = session_cookie.dumps(dict(session))
-    response.headers.add("Set-Cookie", f"my_cookie={same_cookie}; Secure; HttpOnly; SameSite=None; Path=/;")
+    # same_cookie = session_cookie.dumps(dict(session))
+    response.headers.add("Set-Cookie", f"my_cookie='a cookie'; Secure; HttpOnly; SameSite=None; Path=/;")
     g.db = models.DATABASE
     g.db.close()
     return response
