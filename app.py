@@ -77,7 +77,7 @@ def before_request():
 @app.after_request
 def after_request(response):
     # same_cookie = session_cookie.dumps(dict(session))
-    response.headers.add("Set-Cookie", f"my_cookie='a cookie'; SameSite=None;")
+    response.headers.add("Set-Cookie", f"my_cookie='a cookie'; Secure; SameSite=None;")
     g.db = models.DATABASE
     g.db.close()
     return response
@@ -86,7 +86,6 @@ def after_request(response):
 @app.route('/')
 def hello_world():
     resp = make_response('Hello, World!')
-    resp.set_cookie('cookie1', 'value1', samesite='Lax')
     resp.set_cookie('cookie2', 'value2', samesite='None', secure=True)
     return 'hello this flask app is working'
 
