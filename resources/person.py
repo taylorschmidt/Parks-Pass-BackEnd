@@ -62,6 +62,7 @@ def login():
 @person.route('/logout', methods=["GET", "POST"])
 def logout():
     session.pop('person_id', None)
+    session.pop('logged_in', None)
     session['logged_in']=False
     logout_user()
     return jsonify(data={}, status={"code": 200, "message": "Successful logout!"})
