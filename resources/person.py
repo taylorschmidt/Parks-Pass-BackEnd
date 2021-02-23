@@ -77,7 +77,6 @@ def update_username():
 
 @person.route('/', methods=["GET"])
 def get_person():
-    response.headers.add("Set-Cookie", f"my_cookie='a cookie'; Secure; HttpOnly; SameSite=None; Path=/;")
     name = request.cookies.get('my_cookie')
     print('!!! here is my cookie', name)
     try:
