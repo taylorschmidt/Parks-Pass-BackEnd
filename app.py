@@ -35,7 +35,7 @@ session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
 sess = Session()
 sess.init_app(app)
 session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
-print(session_cookie, 'here is the og cookie')
+
 
 # create our session secret key
 app.config.from_pyfile('config.py')
@@ -70,8 +70,8 @@ def after_request(response):
 @app.route('/')
 def hello_world():
     resp = make_response('Hello, World!')
-    # resp.set_cookie('cookie1', 'value1', samesite='Lax')
-    # resp.set_cookie('cookie2', 'value2', samesite='None', secure=True)
+    resp.set_cookie('cookie1', 'value1', samesite='Lax')
+    resp.set_cookie('cookie2', 'value2', samesite='None', secure=True)
     return 'hello this flask app is working'
 
 

@@ -76,7 +76,9 @@ def update_username():
 
 @person.route('/', methods=["GET"])
 def get_person():
-    name = request.cookies.get('cookie2')
+    same_cookie = session_cookie.dumps(dict(session))
+    response.headers.add("Set-Cookie", f"my_cookie={same_cookie}; Secure; HttpOnly; SameSite=None; Path=/;")
+    name = request.cookies.get('my_cookie')
     print('!!! here is my cookie', name)
     try:
         person = [model_to_dict(person) for person in \
