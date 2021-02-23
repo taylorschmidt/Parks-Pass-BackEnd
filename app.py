@@ -45,12 +45,28 @@ login_manager = LoginManager() # in JS -- const loginManager = new LoginManager(
 login_manager.init_app(app) # initialize the new LoginManager instance in our app
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    try:
-        return models.Person.get_by_id(user_id)
-    except models.DoesNotExist:
-        return None
+@login_manager.request_loader
+def load_user(request):
+    token = request.headers.get('Authorization')
+    if token is None:
+        token = request.args.get('token')
+
+    if token is not None:
+        username,password = token.split(":") # naive token
+        user_entry = models.Person.get_by_id(user_id)
+        if (user_entry is not None):
+            user = models.Person(user_entry[0],user_entry[1])
+            if (user.password == password):
+                return user
+    return None
+
+
+# @login_manager.user_loader
+# def load_user(user_id):
+#     try:
+#         return models.Person.get_by_id(user_id)
+#     except models.DoesNotExist:
+#         return None
 
 @app.before_request
 def before_request():
