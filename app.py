@@ -54,8 +54,6 @@ def load_user(user_id):
 
 @app.before_request
 def before_request():
-    same_cookie = session_cookie.dumps(dict(session))
-    response.headers.add("Set-Cookie", f"my_cookie={same_cookie}; Secure; HttpOnly; SameSite=None; Path=/;")
     g.db = models.DATABASE
     g.db.connect()
 
