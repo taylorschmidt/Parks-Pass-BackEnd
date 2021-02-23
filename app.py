@@ -26,15 +26,15 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'fignewton'
 app.config.from_pyfile('config.py')
-app.config['SESSION_TYPE'] = 'redis'
-REDISCLOUD = os.environ.get('REDISCLOUD_URL')
-app.config['SESSION_REDIS'] = redis.from_url(REDISCLOUD)
-app.config['SESSION_COOKIE_NAME'] = 'my_cookie'
-app.config['SESSION_COOKIE_HTTPONLY'] = False
-session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
-sess = Session()
-sess.init_app(app)
-session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
+# app.config['SESSION_TYPE'] = 'redis'
+# REDISCLOUD = os.environ.get('REDISCLOUD_URL')
+# app.config['SESSION_REDIS'] = redis.from_url(REDISCLOUD)
+# app.config['SESSION_COOKIE_NAME'] = 'my_cookie'
+# app.config['SESSION_COOKIE_HTTPONLY'] = False
+# session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
+# sess = Session()
+# sess.init_app(app)
+# session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
 
 
 # create our session secret key
@@ -45,28 +45,28 @@ login_manager = LoginManager() # in JS -- const loginManager = new LoginManager(
 login_manager.init_app(app) # initialize the new LoginManager instance in our app
 
 
-@login_manager.request_loader
-def load_user(request):
-    token = request.headers.get('Authorization')
-    if token is None:
-        token = request.args.get('token')
+# @login_manager.request_loader
+# def load_user(request):
+#     token = request.headers.get('Authorization')
+#     if token is None:
+#         token = request.args.get('token')
 
-    if token is not None:
-        username,password = token.split(":") # naive token
-        user_entry = models.Person.get_by_id(user_id)
-        if (user_entry is not None):
-            user = models.Person(user_entry[0],user_entry[1])
-            if (user.password == password):
-                return user
-    return None
+#     if token is not None:
+#         username,password = token.split(":") # naive token
+#         user_entry = models.Person.get_by_id(user_id)
+#         if (user_entry is not None):
+#             user = models.Person(user_entry[0],user_entry[1])
+#             if (user.password == password):
+#                 return user
+#     return None
 
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#     try:
-#         return models.Person.get_by_id(user_id)
-#     except models.DoesNotExist:
-#         return None
+@login_manager.user_loader
+def load_user(user_id):
+    try:
+        return models.Person.get_by_id(user_id)
+    except models.DoesNotExist:
+        return None
 
 @app.before_request
 def before_request():
@@ -88,7 +88,6 @@ def after_request(response):
 @app.route('/')
 def hello_world():
     resp = make_response('Hello, World!')
-    resp.set_cookie('cookie2', 'value2', samesite='None', secure=True)
     return 'hello this flask app is working'
 
 
