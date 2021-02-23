@@ -1,6 +1,6 @@
 # https://parkspassport-api-heroku.herokuapp.com/
 
-from flask import Flask, request, jsonify, g, session
+from flask import Flask, request, jsonify, g, session, make_response
 from flask_session import Session
 from redis import Redis
 from flask_cors import CORS
@@ -28,6 +28,7 @@ app.config.from_pyfile('config.py')
 app.config['SESSION_TYPE'] = 'redis'
 REDISCLOUD = os.environ.get('REDISCLOUD_URL')
 app.config['SESSION_REDIS'] = redis.from_url(REDISCLOUD)
+
 sess = Session()
 sess.init_app(app)
 
@@ -65,6 +66,8 @@ def after_request(response):
 
 @app.route('/')
 def hello_world():
+    resp = make_response('Hello, World!')
+    resp.set_cookie('cookie2', 'value2', samesite='None', secure=True)
     return 'hello this flask app is working'
 
 
