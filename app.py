@@ -7,6 +7,7 @@ from flask_cors import CORS
 from flask_login import LoginManager
 from flask_redis import Redis
 import redis
+from flask.sessions import SecureCookieSessionInterface
 
 from playhouse.db_url import connect
 import os 
@@ -28,10 +29,11 @@ app.config.from_pyfile('config.py')
 app.config['SESSION_TYPE'] = 'redis'
 REDISCLOUD = os.environ.get('REDISCLOUD_URL')
 app.config['SESSION_REDIS'] = redis.from_url(REDISCLOUD)
-
+app.config.update( SESSION_COOKIE_NAME="my_cookie")
+session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
 sess = Session()
 sess.init_app(app)
-
+session_cookie = SecureCookieSessionInterface().get_signing_serializer(app)
 
 
 # create our session secret key
@@ -59,6 +61,8 @@ def before_request():
 
 @app.after_request
 def after_request(response):
+    same_cookie = session_cookie.dumps(dict(session))
+    response.headers.add("Set-Cookie", f"my_cookie={same_cookie}; Secure; HttpOnly; SameSite=None; Path=/;")
     g.db = models.DATABASE
     g.db.close()
     return response
@@ -67,6 +71,7 @@ def after_request(response):
 @app.route('/')
 def hello_world():
     resp = make_response('Hello, World!')
+    resp.set_cookie('cookie1', 'value1', samesite='Lax')
     resp.set_cookie('cookie2', 'value2', samesite='None', secure=True)
     return 'hello this flask app is working'
 
