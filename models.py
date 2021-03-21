@@ -1,5 +1,6 @@
 from peewee import *
 import datetime
+from datetime import date, datetime
 from flask_login import UserMixin
 import os 
 from playhouse.db_url import connect
