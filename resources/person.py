@@ -16,15 +16,12 @@ def register():
     payload['email'].lower()
 
     try:
-        # does the user already exist/is the username taken?
-        # is there a user in the database whose email matches the one in our payload?
         models.Person.get(models.Person.email == payload['email'])
         return jsonify(data={},\
                        status={"code": 401,\
                                "message": "A user with that email already exists."})
     except models.DoesNotExist:
         # if the user does not already exist, create a user
-        # like counter = counter + 1 - we are overwriting the original payload password with the hashed password
         payload['password'] = generate_password_hash(payload['password'])
         person = models.Person.create(username=payload['username'], password=payload['password'], email=payload['email'])
         person_dict = model_to_dict(person)
@@ -63,7 +60,6 @@ def login():
 def logout():
     session.pop('person_id', None)
     session.pop('logged_in', None)
-    # session['logged_in']=False
     logout_user()
     return jsonify(data={}, status={"code": 200, "message": "Successful logout!"})
 
@@ -78,7 +74,6 @@ def update_username():
 
 @person.route('/', methods=["GET"])
 def get_person():
-    # session['logged_in'] = True
     try:
         person = [model_to_dict(person) for person in \
                 models.Person.select() \

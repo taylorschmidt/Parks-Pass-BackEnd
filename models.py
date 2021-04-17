@@ -23,7 +23,6 @@ class Person(UserMixin, BaseModel):
 class PersonPark (BaseModel):
     person = ForeignKeyField(Person, backref='sites')
     visited_park = ForeignKeyField(Park, backref='tourist')
-    # favorite_park = ForeignKeyField(Park, backref='fav-tourist')
 
 def initialize():
     DATABASE.connect()

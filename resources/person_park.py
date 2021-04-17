@@ -9,7 +9,7 @@ person_park = Blueprint('person_park', 'person_park')
 @person_park.route('/', methods=["POST"])
 def create_person_park():
     payload = request.get_json()
-    #payload should have person_id and visited_park_id
+    #payload contains person_id and visited_park_id
     try:
         if current_user.id:
             query = models.PersonPark.get(models.PersonPark.visited_park_id == payload['visited_park_id'], models.PersonPark.person_id == payload['person_id'])
@@ -19,13 +19,12 @@ def create_person_park():
     except models.DoesNotExist:
         person_park = models.PersonPark.create(**payload)
         pp_dict = model_to_dict(person_park)
-            #create the relationship between dog and user 
         return jsonify(data=pp_dict, status={"code": 201, "message": "Created"})
 
 @person_park.route('/visited', methods=["GET", "POST"])
 def get_person_park_visits():
     payload = request.get_json()
-    #payload should just have user's email address
+    #payload contains user's email address
     try:
         query = (models.Park.select().join(models.PersonPark).join(models.Person).where(models.Person.email == payload['email']))
         pp_dict = [model_to_dict(item) for item in query]
@@ -39,7 +38,7 @@ def get_person_park_visits():
 @person_park.route('/visited/delete', methods=['GET', 'POST'])
 def delete_person_park_visit():
     payload = request.get_json()
-    #payload should have person_id and visited_park_id
+    #payload contains person_id and visited_park_id
     try:
         park_person = models.PersonPark.get(**payload)
         park_person.delete_instance()
